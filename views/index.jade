@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  br
+
+  ul
+  each c19AmsDayData in dailyC19AmsData
+    li= 'On ' + c19AmsDayData.Date_of_publication + ' ' + c19AmsDayData.Total_reported + ' people from Amsterdam tested positive for Covid-19 in Amsterdam'
+
+  //- h2= todayC19AmsData.Total_reported
