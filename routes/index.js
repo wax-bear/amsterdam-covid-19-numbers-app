@@ -2,22 +2,22 @@ const express = require('express');
 const router = express.Router();
 const fetch = require('node-fetch');
 
-router.get('/', async function (request, response) {
+router.get('/', onIndexRequested);
+
+async function onIndexRequested(request, response) {
   try {
     const res = await fetch('https://data.rivm.nl/covid-19/COVID-19_aantallen_gemeente_per_dag.json');  
-
-    if (res.statusCode !== 200) new Error('Request Failed.\n' + `Status Code: ${res.statusCode}`);
-
     const dailyC19AmsData = await getDailyC19AmsData(res);
   
     response.render('index', {
       title: 'People tested positive on COVID-19 in Amsterdam today',
       dailyC19AmsData
     });
-  } catch (e) {
-      console.error(`Got error: ${e.message}`);
+  } catch (err) {
+    const errorObjString = JSON.stringify(err, Object.getOwnPropertyNames(err));
+    console.error('Request failed, error object: ' + errorObjString);
   }
-});
+}
 
 async function getDailyC19AmsData(res) {
   const dailyC19MunNumbersArray = await res.json();
