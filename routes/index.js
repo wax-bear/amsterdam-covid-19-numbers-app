@@ -6,9 +6,9 @@ router.get('/', onIndexRequested);
 
 async function onIndexRequested(request, response) {
   try {
-    const res = await fetch('https://data.rivm.nl/covid-19/COVID-19_aantallen_gemeente_per_dag.json');  
+    const res = await fetch('https://data.rivm.nl/covid-19/COVID-19_aantallen_gemeente_per_dag.json');
     const dailyC19AmsData = await getDailyC19AmsData(res);
-  
+
     response.render('index', {
       title: 'People tested positive on COVID-19 in Amsterdam today',
       dailyC19AmsData
@@ -32,15 +32,14 @@ function getDailyC19AmsNumbersArray(dailyC19MunNumbersArray) {
 
   return dailyC19AmsNumbersArray;
 }
-  
+
 function getAmsEntries(dailyC19AmsNumbersArray) {
   return dailyC19AmsNumbersArray.filter((munDayReport) => munDayReport.Municipality_name === 'Amsterdam');
 }
 
-
 function mergeSameDateEntries(dailyC19AmsNumbersArray) {
   let i = dailyC19AmsNumbersArray.length;
-  
+
   while (i--) {
     const nextElIndex = i - 1;
     if (dailyC19AmsNumbersArray[i].Date_of_publication === dailyC19AmsNumbersArray[nextElIndex].Date_of_publication) {
@@ -48,35 +47,13 @@ function mergeSameDateEntries(dailyC19AmsNumbersArray) {
       dailyC19AmsNumbersArray[i].Hospital_admission += dailyC19AmsNumbersArray[nextElIndex].Hospital_admission;
       dailyC19AmsNumbersArray[i].ROAZ_region += ', ' + dailyC19AmsNumbersArray[nextElIndex].ROAZ_region;
       dailyC19AmsNumbersArray[i].Total_reported += dailyC19AmsNumbersArray[nextElIndex].Total_reported;
-      
+
       dailyC19AmsNumbersArray.splice(nextElIndex, 1);
       i--;
     }
   }
-  
+
   return dailyC19AmsNumbersArray;
 }
 
 module.exports = router;
-
-// async function getTodayC19AmsData(res) {
-//   const dailyC19MunDataArray = await res.json();
-//   let todayC19AmsData = getAmsTodayEntries(dailyC19MunDataArray);
-//   todayC19AmsData = mergeSameDateEntries(todayC19AmsData);
-
-//   return todayC19AmsData;
-// }
-
-// function getAmsTodayEntries(dailyC19AmsNumbersArray) {
-//   return dailyC19AmsNumbersArray.filter((munDayReport) => {
-//     munDayReport.Municipality_name === 'Amsterdam' &&
-//     isToday(munDayReport.Date_of_publication);
-//   });
-// }
-
-// function isToday(publicationDate) {
-//   publicationDate = new Date(publicationDate);
-//   const todaysDate = new Date();
-
-//   return publicationDate.setHours(0,0,0,0) == todaysDate.setHours(0,0,0,0);
-// }
