@@ -1,7 +1,4 @@
-const fetch = require("node-fetch");
-
 const { getDailyC19AmsData } = require("../helpers");
-
 const { fetchCovidJSONData } = require("../services/");
 
 exports.getDailyAmsDataController = async (_, response) => {
