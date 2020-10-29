@@ -6,7 +6,7 @@ exports.getDailyAmsDataController = async (_, response) => {
     const res = await fetchCovidJSONData();
     const dailyC19AmsData = await getDailyC19AmsData(res);
     response.render("index", {
-      title: "People tested positive on COVID-19 in Amsterdam today",
+      today: `Number of infected people today: ${dailyC19AmsData[0].Total_reported} people`,
       dailyC19AmsData,
     });
   } catch (err) {

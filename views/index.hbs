@@ -1,0 +1,7 @@
+    <h3>{{today}}</h3>
+    <br>
+    <ul>
+        {{#each dailyC19AmsData}}
+        <li> {{this.Date_of_publication}}: {{this.Total_reported}} people from Amsterdam tested positive for Covid-19 in Amsterdam</li>
+        {{/each}}
+    </ul>
