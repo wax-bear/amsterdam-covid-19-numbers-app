@@ -1,5 +1,5 @@
 const { getDailyC19AmsData } = require("../helpers");
-const { fetchCovidJSONData } = require("../services/");
+const { fetchCovidJSONData } = require("../services");
 
 exports.getDailyAmsDataController = async (_, response) => {
   try {
