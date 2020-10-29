@@ -2,7 +2,7 @@ const fetch = require("node-fetch");
 
 const { getDailyC19AmsData } = require("../helpers");
 
-exports.getDailyAmsDataController = async (request, response) => {
+exports.getDailyAmsDataController = async (_, response) => {
   try {
     const res = await fetch(
       "https://data.rivm.nl/covid-19/COVID-19_aantallen_gemeente_per_dag.json"
