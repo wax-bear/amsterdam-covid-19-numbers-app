@@ -11,7 +11,7 @@
     "express": "~4.17.1",
     "fetch": "^1.1.0",
     "hbs": "^4.1.1",
-    "http-errors": "~1.8.0",
+    "http-errors": "^1.8.0",
     "jade": "~1.11.0",
     "morgan": "~1.10.0",
     "node-fetch": "^2.6.1"
