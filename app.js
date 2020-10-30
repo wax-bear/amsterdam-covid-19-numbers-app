@@ -10,7 +10,7 @@ const app = express();
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "jade");
+app.set("view engine", "hbs");
 
 app.use(logger("dev"));
 app.use(express.json());
@@ -33,7 +33,7 @@ app.use(function (err, req, res) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render("error");
+  res.render("error", { err });
 });
 
 module.exports = app;

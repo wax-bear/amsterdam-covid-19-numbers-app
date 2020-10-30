@@ -32,10 +32,10 @@ const getDailyC19AmsData = async(res) => {
     const dailyC19MunNumbersArray = await res.json();
     const dailyC19AmsNumbersArray = getDailyC19AmsNumbersArray(dailyC19MunNumbersArray);
   
-    return dailyC19AmsNumbersArray;
+    return dailyC19AmsNumbersArray.reverse();
 }
 
 module.exports = {
-    getDailyC19AmsData: getDailyC19AmsData,
+    getDailyC19AmsData,
 }
 
