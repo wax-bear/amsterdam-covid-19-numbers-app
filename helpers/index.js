@@ -35,7 +35,16 @@ const getDailyC19AmsData = async(res) => {
     return dailyC19AmsNumbersArray.reverse();
 }
 
+const getDayString = (compareDateString) => {
+  const d1 = new Date();
+  const d2 = new Date(compareDateString);
+  const reportIsToday = (d1.toDateString() === d2.toDateString());
+
+  return reportIsToday ? "today" : "yesterday (latest data)";
+}
+
 module.exports = {
     getDailyC19AmsData,
+    getDayString
 }
 

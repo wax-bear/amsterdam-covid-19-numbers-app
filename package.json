@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "nodemon --inspect=0.0.0.0:9229 ./bin/www",
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "test": "jest"
   },
   "dependencies": {
     "cookie-parser": "~1.4.5",
@@ -16,5 +17,9 @@
     "jade": "~1.11.0",
     "morgan": "~1.10.0",
     "node-fetch": "^2.6.1"
+  },
+  "devDependencies": {
+    "jest": "^26.6.1",
+    "nodemon": "^2.0.6"
   }
 }
