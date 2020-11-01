@@ -1,45 +1,43 @@
-const getAmsEntries = (dailyC19AmsNumbersArray) => {
-  return dailyC19AmsNumbersArray.filter(
-    (munDayReport) => munDayReport.Municipality_name === 'Amsterdam'
-  );
+exports.getAmsC19DayReports = async (res) => {
+  const munC19DayReports = await res.json();
+  const amsC19DayReports = getAmsC19DayReports(munC19DayReports);
+
+  return amsC19DayReports.reverse();
 };
 
-const mergeSameDateEntries = (dailyC19AmsNumbersArray) => {
-  let i = dailyC19AmsNumbersArray.length;
+const getAmsC19DayReports = (munC19DayReports) => {
+  const amsC19DayReports = getAmsReports(munC19DayReports);
+  const mergedAmsC19DayReports = mergeSameDateReports(amsC19DayReports);
+
+  return mergedAmsC19DayReports;
+};
+
+const getAmsReports = (munC19DayReports) => {
+  return munC19DayReports.filter((munC19DayReport) => {
+    return munC19DayReport.Municipality_name === 'Amsterdam';
+  });
+};
+
+const mergeSameDateReports = (amsC19DayReport) => {
+  let i = amsC19DayReport.length;
 
   while (i--) {
     const nextElIndex = i - 1;
     if (
-      dailyC19AmsNumbersArray[i].Date_of_publication ===
-      dailyC19AmsNumbersArray[nextElIndex].Date_of_publication
+      amsC19DayReport[i].Date_of_publication ===
+      amsC19DayReport[nextElIndex].Date_of_publication
     ) {
-      dailyC19AmsNumbersArray[i].Deceased += dailyC19AmsNumbersArray[nextElIndex].Deceased;
-      dailyC19AmsNumbersArray[i].Hospital_admission += dailyC19AmsNumbersArray[nextElIndex].Hospital_admission;
-      dailyC19AmsNumbersArray[i].ROAZ_region += ', ' + dailyC19AmsNumbersArray[nextElIndex].ROAZ_region;
-      dailyC19AmsNumbersArray[i].Total_reported += dailyC19AmsNumbersArray[nextElIndex].Total_reported;
+      amsC19DayReport[i].Deceased += amsC19DayReport[nextElIndex].Deceased;
+      amsC19DayReport[i].Hospital_admission += amsC19DayReport[nextElIndex].Hospital_admission;
+      amsC19DayReport[i].ROAZ_region += ', ' + amsC19DayReport[nextElIndex].ROAZ_region;
+      amsC19DayReport[i].Total_reported += amsC19DayReport[nextElIndex].Total_reported;
 
-      dailyC19AmsNumbersArray.splice(nextElIndex, 1);
+      amsC19DayReport.splice(nextElIndex, 1);
       i--;
     }
   }
 
-  return dailyC19AmsNumbersArray;
-};
-
-const getDailyC19AmsNumbersArray = (dailyC19MunNumbersArray) => {
-  let dailyC19AmsNumbersArray = getAmsEntries(dailyC19MunNumbersArray);
-  dailyC19AmsNumbersArray = mergeSameDateEntries(dailyC19AmsNumbersArray);
-
-  return dailyC19AmsNumbersArray;
-};
-
-exports.getDailyC19AmsData = async (res) => {
-  const dailyC19MunNumbersArray = await res.json();
-  const dailyC19AmsNumbersArray = getDailyC19AmsNumbersArray(
-    dailyC19MunNumbersArray
-  );
-
-  return dailyC19AmsNumbersArray.reverse();
+  return amsC19DayReport;
 };
 
 exports.getDayString = (compareDateString) => {
