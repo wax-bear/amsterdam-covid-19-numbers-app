@@ -1,4 +1,4 @@
-# Amsterdam-covid-19-numbers-app
+# amsterdam-covid-19-numbers-app
 
 An application that renders the daily number of people that tested positive on COVID-19 in the municipality of Amsterdam.
 
