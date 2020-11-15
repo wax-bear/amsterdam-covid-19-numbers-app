@@ -75,4 +75,4 @@ exports.getReports = async function() {
   const readFile = util.promisify(fs.readFile);
   const amsReportsString =  await readFile(path.join(__dirname, '/../public/files/ams_reports.txt'));
   return JSON.parse(amsReportsString);
-}
+};
