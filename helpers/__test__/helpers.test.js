@@ -1,23 +1,20 @@
-const { getDayString, getAmsC19DayReports } = require('..');
-const { fetchCovidJSONData } = require('../../services');
+const { getDayString, getReports } = require('..');
 let amsC19DayReports;
 
 beforeAll(() => {
   return new Promise((resolve) => {
-    fetchCovidJSONData().then((covidJSONData) => {
-      getAmsC19DayReports(covidJSONData).then((data) => {
-        amsC19DayReports = data;
-        resolve();
-      });
+    getReports().then((covidJSONData) => {
+      amsC19DayReports = covidJSONData;
+      resolve();
     });
   });
 });
 
-test('getAmsC19DayReports returns an array of length > 0', async () => {
+test('getAmsC19DayReports returns an array of length > 0', () => {
   expect(amsC19DayReports).not.toHaveLength(0);
 });
 
-test('getAmsC19DayReports returns merged reports', async () => {
+test('getAmsC19DayReports returns merged reports', () => {
   amsC19DayReports.forEach((report) => {
     expect(report).toMatchSnapshot({
       ROAZ_region: 'SpoedZorgNet, Netwerk Acute Zorg Noordwest',
@@ -25,7 +22,7 @@ test('getAmsC19DayReports returns merged reports', async () => {
   });
 });
 
-test('getAmsC19DayReports returns an array of reports from Amsterdam', async () => {
+test('getAmsC19DayReports returns an array of reports from Amsterdam', () => {
   amsC19DayReports.forEach((report) => {
     expect(report).toMatchSnapshot({
       Municipality_name: 'Amsterdam',

@@ -1,12 +1,11 @@
-const fetch = require('node-fetch');
+const { getAmsC19DayReports, fetchCovidJSONData, saveReports } = require('../helpers');
 
-exports.fetchCovidJSONData = async () => {
-  try {
-    return await fetch(
-      'https://data.rivm.nl/covid-19/COVID-19_aantallen_gemeente_per_dag.json'
-    );
-  } catch (err) {
-    const errorObjString = JSON.stringify(err, Object.getOwnPropertyNames(err));
-    console.error('Covid API request failed, error object: ' + errorObjString);
-  }
+exports.updateCovid19DataInAmsterdamPeriodically = async () => {
+  const schedule = require('node-schedule');
+
+  schedule.scheduleJob('0 12-16 * * *', async() => {
+    const response = await fetchCovidJSONData();
+    const amsC19Reports = await getAmsC19DayReports(response);
+    saveReports(amsC19Reports);
+  });
 };

@@ -1,10 +1,8 @@
-const { getAmsC19DayReports, getDayString } = require('../helpers');
-const { fetchCovidJSONData } = require('../services');
+const { getDayString, getReports } = require('../helpers');
 
 exports.getDailyAmsDataController = async (_, response) => {
   try {
-    const res = await fetchCovidJSONData();
-    const dailyC19AmsData = await getAmsC19DayReports(res);
+    const dailyC19AmsData = await getReports();
     const dayString = getDayString(dailyC19AmsData[0].Date_of_report);
     const reportedNumber = dailyC19AmsData[0].Total_reported;
 
