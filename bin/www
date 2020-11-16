@@ -7,7 +7,7 @@
 const app = require('../app');
 const debug = require('debug')('example-app:server');
 const http = require('http');
-const { updateCovid19DataInAmsterdamPeriodically } = require('../services');
+const { updateAmsC19DataPeriodically } = require('../services/refresh-data');
 
 /**
  * Get port from environment and store in Express.
@@ -32,7 +32,7 @@ server.on('listening', onListening);
 
 /* Call scheduled task runner */
 
-updateCovid19DataInAmsterdamPeriodically();
+updateAmsC19DataPeriodically();
 
 /**
  * Normalize a port into a number, string, or false.
