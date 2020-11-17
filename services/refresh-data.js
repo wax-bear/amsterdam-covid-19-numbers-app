@@ -10,7 +10,7 @@ const {
 exports.updateAmsC19DataPeriodically = () => {
   const refreshC19AmsData = new CronJob(
     "*/14 12-20 * * *",
-    onTick(),
+    onTick,
     null,
     false,
     "Europe/Amsterdam"
