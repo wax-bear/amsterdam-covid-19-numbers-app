@@ -4,7 +4,7 @@ require("../config/db.config");
 
 exports.getDailyAmsDataController = async (_, response) => {
   try {
-    const dailyC19AmsReports = await Report.find({});
+    const dailyC19AmsReports = await Report.find({}).sort("Date_of_publication");
     const dailyC19AmsReportsDesc = dailyC19AmsReports.reverse();
     const dayString = getDayString(dailyC19AmsReportsDesc[0].Date_of_report);
     const reportedNumber = dailyC19AmsReportsDesc[0].Total_reported;
