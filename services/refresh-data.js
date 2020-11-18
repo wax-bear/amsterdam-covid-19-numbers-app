@@ -1,11 +1,10 @@
 const { CronJob } = require("cron");
 const {
-  getAmsC19DayReports,
+  getAmsC19DayReport,
   fetchCovidJSONData,
-  saveReports,
-  getReports,
   isReportToday,
 } = require("../helpers");
+const { Report } = require("../models/Report.model");
 
 exports.updateAmsC19DataPeriodically = () => {
   const refreshC19AmsData = new CronJob(
@@ -20,10 +19,11 @@ exports.updateAmsC19DataPeriodically = () => {
 };
 
 const onTick = async () => {
-  const reports = await getReports();
-  if (isReportToday(reports[0].Date_of_publication)) return;
+  require("../config/db.config");
+  const reports = await Report.find({}).sort("Date_of_publication");
+  if (reports.length && isReportToday(reports[reports.length - 1].Date_of_publication)) return;
 
   const NLC19MunReports = await fetchCovidJSONData();
-  const amsC19Reports = await getAmsC19DayReports(NLC19MunReports);
-  saveReports(amsC19Reports);
+  const amsC19DayReport = await getAmsC19DayReport(NLC19MunReports);
+  Report.create(amsC19DayReport);
 };
