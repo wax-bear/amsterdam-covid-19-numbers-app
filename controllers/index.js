@@ -1,14 +1,17 @@
-const { getDayString, getReports } = require("../helpers");
+const { getDayString } = require("../helpers");
+const { Report } = require("../models/Report.model");
+require("../config/db.config");
 
 exports.getDailyAmsDataController = async (_, response) => {
   try {
-    const dailyC19AmsData = await getReports();
-    const dayString = getDayString(dailyC19AmsData[0].Date_of_report);
-    const reportedNumber = dailyC19AmsData[0].Total_reported;
+    const dailyC19AmsReports = await Report.find({});
+    const dailyC19AmsReportsDesc = dailyC19AmsReports.reverse();
+    const dayString = getDayString(dailyC19AmsReportsDesc[0].Date_of_report);
+    const reportedNumber = dailyC19AmsReportsDesc[0].Total_reported;
 
-    response.render("index", {
+    response.render("reports", {
       title: `People tested positive on COVID-19 in Amsterdam ${dayString}: ${reportedNumber}`,
-      dailyC19AmsData,
+      reports: dailyC19AmsReportsDesc
     });
   } catch (err) {
     const errorObjString = JSON.stringify(err, Object.getOwnPropertyNames(err));
