@@ -1,7 +1,7 @@
     <h3>{{title}}</h3>
     <br>
-    <ul>
+    <table>
         {{#each reports}}
-            <li> {{{formatDate this._doc.Date_of_publication}}}: <span>{{this._doc.Total_reported}}</span> people tested positive for COVID-19 in Amsterdam</li>
+            <tr><td>{{{formatDate this._doc.Date_of_publication}}}</td><td>:</td><td><span>{{this._doc.Total_reported}}</span></td><td>people tested positive for COVID-19 in Amsterdam</td></tr>
         {{/each}}
-    </ul>
+    </table>

@@ -12,8 +12,9 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
 Handlebars.registerHelper('formatDate', function (context) {
-  const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
-  return new Date(context).toLocaleDateString("en-US", options);
+  const date = new Date(context).toLocaleDateString("en-US");
+
+  return date;
 });
 
 app.use(logger('dev'));
